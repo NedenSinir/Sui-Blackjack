@@ -88,7 +88,7 @@ module blackjack::table{
     public entry fun join_table<COIN>(game_table: &mut GameTable<COIN>,bet_amount:u64,bet_payment:&mut Coin<COIN>,
  ctx: &mut TxContext) {
         let curr_length =  vector::length<address>(&game_table.players);
-
+        assert!(game_table.game_state == SGameCreated,EGameIsStillActive);
         assert!(curr_length+1 <= game_table.max_players,EGameTableAlreadyFull);
         let player_balance = balance::zero();
         let coin_balance = coin::balance_mut(bet_payment);
